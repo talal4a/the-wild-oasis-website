@@ -1,5 +1,7 @@
 import Link from "next/link";
-import Navigation from "./_components/Navigation";
+export const metadata = {
+  title: "The Wild Oasis",
+};
 export default function Home() {
   return (
     <div>
