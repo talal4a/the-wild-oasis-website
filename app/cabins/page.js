@@ -5,7 +5,8 @@ export const revalidate = 3600;
 export const metadata = {
   title: "Cabins",
 };
-export default function Page() {
+export default function Page({ searchParams }) {
+  const filter = searchParams?.capacity ?? "all";
   // CHANGE
   return (
     <div>
