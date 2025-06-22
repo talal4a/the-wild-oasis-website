@@ -2,6 +2,7 @@ import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import Image from "next/image";
 import TextExpander from "@/app/_components/TextExpander";
+import DateSelector from "@/starter/components/DateSelector";
 export async function generateMetadata({ params }) {
   const { name } = await getCabin(params.cabinId);
   return { title: `Cabin ${name}` };
@@ -44,7 +45,7 @@ export default async function Page({ params }) {
             <li className="flex gap-3 items-center">
               <MapPinIcon className="h-5 w-5 text-primary-600" />
               <span className="text-lg">
-                Located in the heart of the{" "}
+                Located in the heart of the
                 <span className="font-bold">Dolomites</span> (Italy)
               </span>
             </li>
@@ -63,7 +64,10 @@ export default async function Page({ params }) {
           Reserve {name} today. Pay on arrival.
         </h2>
       </div>
-      <div></div>
+      <div>
+        <DateSelector/>
+        <ReservationForm/>
+      </div>
     </div>
   );
 }
