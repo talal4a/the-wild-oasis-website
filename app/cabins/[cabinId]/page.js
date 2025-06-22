@@ -1,9 +1,12 @@
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
-import { getCabin, getCabins } from "@/app/_lib/data-service";
+import {
+  getBookedDatesByCabinId,
+  getCabin,
+  getCabins,
+  getSettings,
+} from "@/app/_lib/data-service";
 import Image from "next/image";
 import TextExpander from "@/app/_components/TextExpander";
-import ReservationForm from "@/app/_components/ReservationForm";
-import DateSelector from "@/app/_components/DateSelector";
 export async function generateMetadata({ params }) {
   const { name } = await getCabin(params.cabinId);
   return { title: `Cabin ${name}` };
@@ -14,10 +17,15 @@ export async function generateStaticParams() {
   return ids;
 }
 export default async function Page({ params }) {
-  const cabin = await getCabin(params.cabinId);
-    const settings=await getSettings();
-    const bookedData=await getBookedDatesByCabinId(params.CabinId);
-     const { id, name, maxCapacity, regularPrice, discount, image, description } =
+  // const cabin = await getCabin(params.cabinId);
+  // const settings = await getSettings();
+  // const bookedData = await getBookedDatesByCabinId(params.cabinId);
+  const [cabin, settings, bookedData] = await Promise.all([
+    getCabin(params.cabinId),
+    getSettings(),
+    getBookedDatesByCabinId(params.cabinId),
+  ]);
+  const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
   return (
     <div className="max-w-6xl mx-auto mt-8">
@@ -65,10 +73,6 @@ export default async function Page({ params }) {
         <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
           Reserve {name} today. Pay on arrival.
         </h2>
-      </div>
-      <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]">
-        <DateSelector />
-        <ReservationForm />
       </div>
     </div>
   );
