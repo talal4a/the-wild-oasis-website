@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import SelectCountry from "./SelectCountry";
-export default function UpdateProfileFrom() {
+export default function UpdateProfileFrom({ children }) {
   const [count, setCount] = useState();
   const countryFlag = "pt.jpg";
   const nationality = "portagal";
@@ -30,12 +29,7 @@ export default function UpdateProfileFrom() {
             className="h-5 rounded-sm"
           />
         </div>
-        <SelectCountry
-          name="nationality"
-          id="nationality"
-          className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-          defaultCountry={nationality}
-        />
+        {children}
       </div>
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
