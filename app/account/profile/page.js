@@ -17,7 +17,6 @@ export default function Page() {
         faster and smoother. See you soon!
       </p>
       <UpdateProfileFrom>
-        {" "}
         <SelectCountry
           name="nationality"
           id="nationality"
