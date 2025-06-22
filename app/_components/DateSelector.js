@@ -19,11 +19,9 @@ function DateSelector() {
   const numNights = 23;
   const cabinPrice = 23;
   const range = { from: null, to: null };
-
   // SETTINGS
   const minBookingLength = 1;
   const maxBookingLength = 23;
-
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
