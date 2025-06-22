@@ -1,11 +1,9 @@
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
-import {
-  getCabin,
-  getCabins,
-} from "@/app/_lib/data-service";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 import Image from "next/image";
 import TextExpander from "@/app/_components/TextExpander";
 import Reservation from "@/app/_components/Reservation";
+import { Suspense } from "react";
 export async function generateMetadata({ params }) {
   const { name } = await getCabin(params.cabinId);
   return { title: `Cabin ${name}` };
@@ -67,7 +65,9 @@ export default async function Page({ params }) {
         <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
           Reserve {name} today. Pay on arrival.
         </h2>
-        <Reservation cabinId={params.cabinId}/>
+        <Suspense fallback={<Spinner />}>
+          <Reservation cabinId={params.cabinId} />
+        </Suspense>
       </div>
     </div>
   );

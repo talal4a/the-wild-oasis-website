@@ -7,7 +7,6 @@ import {
 } from "@/app/_lib/data-service";
 export default async function Reservation({ cabinId }) {
   const [settings, bookedData] = await Promise.all([
-    getCabin(cabinId),
     getSettings(),
     getBookedDatesByCabinId(cabinId),
   ]);
