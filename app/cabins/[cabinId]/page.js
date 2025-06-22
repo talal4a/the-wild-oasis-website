@@ -7,6 +7,7 @@ import {
 } from "@/app/_lib/data-service";
 import Image from "next/image";
 import TextExpander from "@/app/_components/TextExpander";
+import Reservation from "@/app/_components/Reservation";
 export async function generateMetadata({ params }) {
   const { name } = await getCabin(params.cabinId);
   return { title: `Cabin ${name}` };
@@ -17,14 +18,9 @@ export async function generateStaticParams() {
   return ids;
 }
 export default async function Page({ params }) {
-  // const cabin = await getCabin(params.cabinId);
+  const cabin = await getCabin(params.cabinId);
   // const settings = await getSettings();
   // const bookedData = await getBookedDatesByCabinId(params.cabinId);
-  const [cabin, settings, bookedData] = await Promise.all([
-    getCabin(params.cabinId),
-    getSettings(),
-    getBookedDatesByCabinId(params.cabinId),
-  ]);
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
   return (
@@ -73,6 +69,7 @@ export default async function Page({ params }) {
         <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
           Reserve {name} today. Pay on arrival.
         </h2>
+        <Reservation/>
       </div>
     </div>
   );
