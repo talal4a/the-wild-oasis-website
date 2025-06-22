@@ -32,7 +32,7 @@ export default async function Page({ params }) {
           </h3>
           <p className="text-lg text-primary-300 mb-10">
             <TextExpander>{description}</TextExpander>
-            </p>
+          </p>
           <ul className="flex flex-col gap-4 mb-7">
             <li className="flex gap-3 items-center">
               <UsersIcon className="h-5 w-5 text-primary-600" />
@@ -60,9 +60,10 @@ export default async function Page({ params }) {
 
       <div>
         <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival.
+          Reserve {name} today. Pay on arrival.
         </h2>
       </div>
+      <div></div>
     </div>
   );
 }
