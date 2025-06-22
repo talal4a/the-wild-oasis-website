@@ -1,9 +1,7 @@
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import {
-  getBookedDatesByCabinId,
   getCabin,
   getCabins,
-  getSettings,
 } from "@/app/_lib/data-service";
 import Image from "next/image";
 import TextExpander from "@/app/_components/TextExpander";
