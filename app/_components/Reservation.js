@@ -7,7 +7,7 @@ export default async function Reservation({ cabinId }) {
     getBookedDatesByCabinId(cabinId),
   ]);
   return (
-    <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]">
+   <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] w-full max-w-[1600px] mx-auto border border-primary-800 min-h-[400px]">
       <DateSelector
         settings={settings}
         bookedDates={bookedDates}

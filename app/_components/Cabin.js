@@ -1,7 +1,7 @@
 import Image from "next/image";
 import TextExpander from "./TextExpander";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
-export default function Cabin() {
+export default async function Cabin({cabin}) {
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
   return (
