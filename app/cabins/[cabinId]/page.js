@@ -1,7 +1,4 @@
-import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
-import Image from "next/image";
-import TextExpander from "@/app/_components/TextExpander";
 import Reservation from "@/app/_components/Reservation";
 import { Suspense } from "react";
 import Spinner from "@/app/_components/Spinner";
