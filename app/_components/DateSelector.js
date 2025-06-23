@@ -37,7 +37,7 @@ function DateSelector({ settings, cabin, bookedDates }) {
         min={minBookingLength + 1}
         max={maxBookingLength}
         disabled={{ before: new Date() }}
-        toYear={new Date().getFullYear() + 5}
+        endMonth={new Date(new Date().getFullYear() + 5, 11)}
         captionLayout="dropdown"
         numberOfMonths={2}
         classNames={{

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 @layer components {
+  :root {
+    --accent-500: #c69963;
+    --accent-600: #b78343;
+  }
   .spinner {
     margin: 3.2rem auto 1.6rem;
     width: 60px;
@@ -28,8 +32,19 @@
 }
 /* For data picker */
 .rdp {
-  --rdp-cell-size: 32px !important;
-  --rdp-accent-color: theme("colors.accent.500") !important;
-  --rdp-background-color: theme("colors.accent.600") !important;
-  margin: 0 !important;
+  --rdp-cell-size: 32px;
+  --rdp-accent-color: var(--accent-500);
+  --rdp-background-color: var(--accent-600);
+  margin: 0;
+}
+
+.rdp-day_range_start,
+.rdp-day_range_end {
+  background-color: var(--accent-500);
+  color: black;
+}
+
+.rdp-day_range_middle {
+  background-color: var(--accent-600);
+  color: black;
 }
