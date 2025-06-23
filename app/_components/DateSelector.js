@@ -13,8 +13,9 @@ function isAlreadyBooked(range, datesArr) {
   );
 }
 function DateSelector({ settings, cabin, bookedDates }) {
-  const [range,setRange]=useState({
-    from:undefined,to:undefined
+  const [range, setRange] = useState({
+    from: undefined,
+    to: undefined,
   });
   // CHANGE
   const regularPrice = 23;
@@ -30,11 +31,8 @@ function DateSelector({ settings, cabin, bookedDates }) {
     <div className="flex flex-col justify-between">
       <DayPicker
         className="pt-12 place-self-center"
-        classNames={{
-          months: "flex flex-row gap-10",
-        }}
         mode="range"
-        onSelected={(range)=>setRange(range)}
+        onSelect={(range) => setRange(range)}
         selected={range}
         min={minBookingLength + 1}
         max={maxBookingLength}
@@ -42,6 +40,12 @@ function DateSelector({ settings, cabin, bookedDates }) {
         toYear={new Date().getFullYear() + 5}
         captionLayout="dropdown"
         numberOfMonths={2}
+        classNames={{
+          months: "flex flex-row gap-10",
+          day_range_start: "bg-yellow-400 text-black",
+          day_range_end: "bg-yellow-400 text-black",
+          day_range_middle: "bg-yellow-600 text-black",
+        }}
       />
       <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
         <div className="flex items-baseline gap-6">
