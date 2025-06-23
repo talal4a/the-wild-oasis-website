@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Cabin(){
     const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
