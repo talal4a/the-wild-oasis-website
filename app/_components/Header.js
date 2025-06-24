@@ -1,4 +1,3 @@
-"use client";
 import Navigation from "@/app/_components/Navigation";
 import Logo from "@/app/_components/Logo";
 function Header() {
