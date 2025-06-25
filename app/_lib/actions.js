@@ -1,5 +1,5 @@
 "use server";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 import { auth } from "./auth";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
