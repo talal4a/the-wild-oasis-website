@@ -6,7 +6,6 @@ export default function UpdateProfileFrom({ children, guest }) {
   const { nationality, fullName, email, nationalID, countryFlag } = guest;
   function SubmitButton() {
     const { pending } = useFormStatus();
-
     return (
       <button
         type="submit"
