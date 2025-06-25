@@ -1,57 +1,54 @@
 "use client";
 
-import { DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
-import { useReservation } from "./ReservationContext";
 import {
   differenceInDays,
   isPast,
   isSameDay,
   isWithinInterval,
 } from "date-fns";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
+import { useReservation } from "./ReservationContext";
+
+function isAlreadyBooked(range, datesArr) {
+  return (
+    range.from &&
+    range.to &&
+    datesArr.some((date) =>
+      isWithinInterval(date, { start: range.from, end: range.to })
+    )
+  );
+}
 
 function DateSelector({ settings, cabin, bookedDates }) {
   const { range, setRange, resetRange } = useReservation();
+
+  const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;
+
   const { regularPrice, discount } = cabin;
+  const numNights = differenceInDays(displayRange.to, displayRange.from);
+  const cabinPrice = numNights * (regularPrice - discount);
 
-  // Ensure bookedDates are Date objects
-  const parsedBookedDates = bookedDates.map((d) => new Date(d));
-
-  // Calculate nights and total price
-  const numNights =
-    range?.from && range?.to ? differenceInDays(range.to, range.from) : 0;
-  const totalPrice = numNights > 0 ? numNights * (regularPrice - discount) : 0;
-
-  // Format price (e.g., $120.00)
-  const formatPrice = (value) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(value);
+  const { minBookingLength, maxBookingLength } = settings;
 
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
         className="pt-12 place-self-center"
         mode="range"
-        selected={range}
-        onSelect={(range) => setRange(range)}
-        numberOfMonths={2}
+        onSelect={setRange}
+        selected={displayRange}
+        min={minBookingLength + 1}
+        max={maxBookingLength}
+        fromMonth={new Date()}
+        fromDate={new Date()}
+        toYear={new Date().getFullYear() + 5}
         captionLayout="dropdown"
-        disabled={(date) =>
-          isPast(date) || parsedBookedDates.some((d) => isSameDay(d, date))
+        numberOfMonths={2}
+        disabled={(curDate) =>
+          isPast(curDate) ||
+          bookedDates.some((date) => isSameDay(date, curDate))
         }
-        endMonth={new Date(new Date().getFullYear() + 5, 11)}
-        classNames={{
-          months: "flex flex-row gap-10",
-          day_range_start: "bg-yellow-400 text-black",
-          day_range_middle: "bg-yellow-300 text-black",
-          day_range_end: "bg-yellow-400 text-black",
-          day_selected: "bg-yellow-400 text-black",
-          today: "border border-yellow-500",
-          nav_button_previous: "text-yellow-400 hover:bg-yellow-100",
-          nav_button_next: "text-yellow-400 hover:bg-yellow-100",
-        }}
       />
 
       <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
@@ -59,42 +56,37 @@ function DateSelector({ settings, cabin, bookedDates }) {
           <p className="flex gap-2 items-baseline">
             {discount > 0 ? (
               <>
-                <span className="text-2xl">
-                  {formatPrice(regularPrice - discount)}
-                </span>
+                <span className="text-2xl">${regularPrice - discount}</span>
                 <span className="line-through font-semibold text-primary-700">
-                  {formatPrice(regularPrice)}
+                  ${regularPrice}
                 </span>
               </>
             ) : (
-              <span className="text-2xl">{formatPrice(regularPrice)}</span>
+              <span className="text-2xl">${regularPrice}</span>
             )}
             <span className="">/night</span>
           </p>
-
-          {numNights > 0 && (
+          {numNights ? (
             <>
               <p className="bg-accent-600 px-3 py-2 text-2xl">
                 <span>&times;</span> <span>{numNights}</span>
               </p>
               <p>
                 <span className="text-lg font-bold uppercase">Total</span>{" "}
-                <span className="text-2xl font-semibold">
-                  {formatPrice(totalPrice)}
-                </span>
+                <span className="text-2xl font-semibold">${cabinPrice}</span>
               </p>
             </>
-          )}
+          ) : null}
         </div>
 
-        {(range.from || range.to) && (
+        {range.from || range.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
             onClick={resetRange}
           >
             Clear
           </button>
-        )}
+        ) : null}
       </div>
     </div>
   );
