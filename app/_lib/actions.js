@@ -1,12 +1,8 @@
 "use server";
-import { signIn } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 import { auth } from "./auth";
 import { supabase } from "./supabase";
-export async function signInAction() {
-  await signIn("google", {
-    redirectTo: "/account",
-  });
-}
+import { revalidatePath } from "next/cache";
 export async function updateGuest(formatData) {
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
@@ -26,10 +22,10 @@ export async function updateGuest(formatData) {
   const { data, error } = await supabase
     .from("guests")
     .update(updateData)
-    .eq("id", guestId);
+    .eq("id", session.user.guestId);
   if (error) {
-    console.error("Supabase update error:", error.message, error.details);
     throw new Error("Guest could not be updated");
   }
-  console.log("Guest updated successfully:", data);
+  revalidatePath("/account/profile");
+  redirect("/account/profile");
 }
