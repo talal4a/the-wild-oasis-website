@@ -3,9 +3,7 @@ import { redirect } from "next/navigation";
 import { auth } from "./auth";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
-import { session } from "@/app/_lib/auth";
 import { getBookings } from "./data-service";
-import { gu } from "date-fns/locale";
 export async function updateGuest(formatData) {
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
